@@ -1,6 +1,8 @@
 # == WHAT
 # Simple script for irssi to trigger Mac OS X 10.8's Notification Center
 #
+# Modified: 2015-11-8 (Julian) to support Linux too (Gnome).
+#
 # == WHO
 # Patrick Kontschak 2012
 # 
@@ -46,11 +48,14 @@ $VERSION = "0.0";
   changed     => "Wed  8 Aug 2012 14:40:15 EDT"
 );
 
-# All the works
 sub do_notifier {
   my ($server, $title, $data) = @_;
-    $data =~ s/["';]//g;
-    system("terminal-notifier -message '$data' -title '$title' >> /dev/null 2>&1");
+
+  if ($^O eq 'darwin') {
+    system('terminal-notifier', ('-message', $data, '-title', $title));
+  } else {
+    system('notify-send', ('--urgency', 'critical', '--expire-time', '1000', $title, $data));
+  }
     return 1
 }
 
