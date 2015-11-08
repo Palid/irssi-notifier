@@ -54,7 +54,7 @@ sub do_notifier {
   if ($^O eq 'darwin') {
     system('terminal-notifier', ('-message', $data, '-title', $title));
   } else {
-    system('notify-send', ('--urgency', 'critical', '--expire-time', '1000', $title, $data));
+    system('notify-send', ('--urgency', 'critical', '--expire-time', '1000', '--hint', 'int:transient:1', $title, $data));
   }
     return 1
 }
