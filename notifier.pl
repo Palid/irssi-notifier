@@ -61,6 +61,9 @@ sub do_notifier {
 
 sub notifier_it {
   my ($server, $title, $data, $channel, $nick) = @_;
+  my $letter = substr($nick, 0, 1);
+  # ZNC spam fix
+  if ($letter != '*') {
 
     my $filter = Irssi::settings_get_str('notifier_on_regex');
     my $channel_filter = Irssi::settings_get_str('notifier_channel_regex');
@@ -76,6 +79,7 @@ sub notifier_it {
 
     $title = $title . " " . $channel;
     do_notifier($server, $title, $data);
+  }
 }
 
 # All the works
